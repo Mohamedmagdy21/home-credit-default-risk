@@ -75,6 +75,11 @@ The ensemble of 5 fold models is served via REST API, producing an averaged pred
 Housing_loans_approval/
 ├── main.py                         # CLI: train, predict, or full pipeline
 ├── config/config.py                # All paths, parameters, and settings
+├── samples/                        # 4 downloadable sample JSON profiles
+│   ├── sample_low_risk.json        # Low-risk applicant (all 197 features)
+│   ├── sample_medium_risk.json     # Medium-risk applicant
+│   ├── sample_high_risk.json       # High-risk applicant
+│   └── sample_pensioner.json       # Pensioner on fixed income
 ├── src/
 │   ├── data/loader.py              # Parquet loading
 │   ├── features/
@@ -89,7 +94,8 @@ Housing_loans_approval/
 │   │   ├── ensemble.py             # Fold-model ensemble for serving
 │   │   └── static/                 # Web UI
 │   │       ├── logo.svg            # Project logo
-│   │       └── index.html          # Business-oriented assessment dashboard
+│   │       ├── index.html          # Dashboard with all 197 features + upload
+│   │       └── samples/            # Downloadable sample JSON files
 │   └── utils/logger.py             # Structured logging (stdout + file)
 ├── tests/
 │   ├── test_pipeline.py            # 5 smoke tests for the pipeline
@@ -135,6 +141,21 @@ uvicorn src.serving.app:app --host 0.0.0.0 --port 8007
 
 Navigate to **[http://localhost:8007](http://localhost:8007)** in your browser.
 
+The dashboard exposes all **197 features** in 11 collapsible sections. You can:
+
+- **Load Random Sample** — fetches a real application from the test set with all features populated
+- **Upload File** — upload a JSON file from your device to fill the entire form instantly
+- **Download samples** — 4 pre-built profiles are available for download directly from the UI:
+
+| Sample | Risk Score | Decision | Description |
+|--------|-----------|----------|-------------|
+| `sample_low_risk.json` | 0.3% | approve | Excellent credit, stable income, low debt |
+| `sample_medium_risk.json` | 4.8% | approve | Borderline applicant, moderate risk |
+| `sample_high_risk.json` | 22.2% | reject | Poor credit history, high debt, late payments |
+| `sample_pensioner.json` | 6.1% | review | Fixed income, falls in manual-review zone |
+
+**Workflow:** download a sample → click Upload File → select the JSON → all 197 fields populate → click Assess Application.
+
 ### 5. Make a prediction
 
 ```bash
@@ -147,8 +168,13 @@ curl -X POST http://localhost:8007/predict \
     "AMT_CREDIT": 450000,
     "AMT_ANNUITY": 27000,
     "AMT_GOODS_PRICE": 540000,
+    "EXT_SOURCE_1": 0.55,
     "EXT_SOURCE_2": 0.65,
     "EXT_SOURCE_3": 0.60,
+    "bureau_loan_count": 4,
+    "debt_to_credit_ratio": 0.35,
+    "avg_pct_late": 0.10,
+    "rejection_rate": 0.20,
     "NAME_INCOME_TYPE": "Working",
     "NAME_EDUCATION_TYPE": "Higher education"
   }'
@@ -159,7 +185,7 @@ Response:
 {
   "score": 0.042,
   "decision": "approve",
-  "threshold": 0.5
+  "threshold": 0.08
 }
 ```
 
@@ -169,9 +195,11 @@ Response:
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/` or `/ui` | Business-oriented assessment dashboard |
+| GET | `/` or `/ui` | Business-oriented assessment dashboard (all 197 features) |
 | GET | `/health` | Service and model status |
 | GET | `/features` | List all 197 expected features |
+| GET | `/sample` | Load a random real application with all 197 features |
+| GET | `/sample/{index}` | Load a specific application by index |
 | POST | `/predict` | Single application prediction |
 | POST | `/predict_batch` | Batch predictions |
 
@@ -181,7 +209,7 @@ Response:
 {
   "score": 0.042,
   "decision": "approve",
-  "threshold": 0.5
+  "threshold": 0.08
 }
 ```
 
@@ -191,9 +219,9 @@ Response:
 | `decision` | **Business rule applied to the score** — `score < 0.6×threshold` → **`"approve"`**, `0.6×threshold ≤ score < threshold` → **`"review"`** (manual underwriting), `score ≥ threshold` → **`"reject"`**. The threshold is configurable to match a lender's risk appetite. |
 | `threshold` | **The cutoff used for this decision** (defaults to 0.08, overridable via the `DECISION_THRESHOLD` environment variable). The threshold is set near the dataset's 8.1% base default rate so the system catches realistic risk rather than approving everyone. A lower threshold means fewer defaults but more rejections; a higher threshold means more approvals but higher portfolio risk. Scores in the 0.6x–1x range of the threshold trigger a **`"review"`** decision for manual underwriting. |
 
-**Example interpretation:** If the API returns `score: 0.042`, the model estimates a **4 out of 100** chance of default. Since 0.042 < 0.5, the system recommends approval. This is a low-risk applicant.
+**Example interpretation:** If the API returns `score: 0.042`, the model estimates a **4 out of 100** chance of default. Since 0.042 < 0.048 (0.6 x 0.08), the system recommends approval. This is a low-risk applicant.
 
-The score alone is more informative than the binary decision — two applicants can both be approved but one may have a score of 0.01 (near-zero risk) and another 0.45 (borderline). The dashboard's risk gauge visualizes this nuance.
+The score alone is more informative than the binary decision — two applicants can both be approved but one may have a score of 0.01 (near-zero risk) and another 0.06 (borderline, in the review zone). The dashboard's risk gauge visualizes this nuance.
 
 Interactive API docs at **[http://localhost:8007/docs](http://localhost:8007/docs)**.
 
