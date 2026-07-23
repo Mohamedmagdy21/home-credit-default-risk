@@ -7,298 +7,79 @@
 <link rel="icon" type="image/svg+xml" href="/static/logo.svg">
 <style>
   :root {
-    --primary: #1a365d;
-    --primary-light: #2b6cb0;
-    --accent: #48bb78;
-    --accent-dark: #38a169;
-    --danger: #e53e3e;
-    --warning: #ed8936;
-    --bg: #f7fafc;
-    --card: #ffffff;
-    --text: #2d3748;
-    --text-light: #718096;
-    --border: #e2e8f0;
-    --radius: 12px;
+    --primary: #1a365d; --primary-light: #2b6cb0;
+    --accent: #48bb78; --accent-dark: #38a169;
+    --danger: #e53e3e; --warning: #ed8936;
+    --bg: #f7fafc; --card: #ffffff;
+    --text: #2d3748; --text-light: #718096;
+    --border: #e2e8f0; --radius: 12px;
     --shadow: 0 4px 24px rgba(0,0,0,0.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* Header */
-  .header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-    color: white;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-    height: 64px;
-  }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .header { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); height: 64px; }
   .header-left { display: flex; align-items: center; gap: 16px; }
   .header-logo { height: 40px; width: 40px; }
-  .header h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.5px; }
-  .header-badge {
-    background: rgba(255,255,255,0.15);
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-  }
-
-  .container {
-    max-width: 1320px;
-    margin: 0 auto;
-    padding: 28px 24px;
-    display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 28px;
-  }
-
-  /* Cards */
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 24px;
-    border: 1px solid var(--border);
-  }
-  .card-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #ebf4ff;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* Form */
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .form-group { display: flex; flex-direction: column; gap: 4px; }
-  .form-group.full { grid-column: 1 / -1; }
-  .form-group label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-light);
-    letter-spacing: 0.3px;
-  }
-  .form-group input, .form-group select {
-    padding: 10px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    font-size: 14px;
-    color: var(--text);
-    background: #fff;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    font-family: inherit;
-  }
-  .form-group input:focus, .form-group select:focus {
-    outline: none;
-    border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(43,108,176,0.12);
-  }
-  .form-group input:hover, .form-group select:hover {
-    border-color: #a0aec0;
-  }
-  .form-group .hint {
-    font-size: 11px;
-    color: var(--text-light);
-    margin-top: 2px;
-  }
-
-  .btn-primary {
-    grid-column: 1 / -1;
-    padding: 14px 28px;
-    background: linear-gradient(135deg, var(--primary-light), var(--primary));
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    letter-spacing: 0.5px;
-    margin-top: 4px;
-  }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(43,108,176,0.3); }
-  .btn-primary:active { transform: translateY(0); }
+  .header h1 { font-size: 20px; font-weight: 600; }
+  .header-badge { background: rgba(255,255,255,0.15); padding: 4px 14px; border-radius: 20px; font-size: 12px; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 28px 24px; display: grid; grid-template-columns: 1fr 400px; gap: 28px; }
+  .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; border: 1px solid var(--border); }
+  .card-title { font-size: 16px; font-weight: 600; color: var(--primary); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #ebf4ff; display: flex; align-items: center; gap: 8px; }
+  .toolbar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .btn { padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: transform 0.15s, box-shadow 0.15s; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-sample { background: linear-gradient(135deg, #38a169, #2f855a); color: white; }
+  .btn-sample:hover { box-shadow: 0 6px 20px rgba(56,161,105,0.3); }
+  .btn-clear { background: #e2e8f0; color: var(--text); }
+  .btn-primary { background: linear-gradient(135deg, var(--primary-light), var(--primary)); color: white; padding: 14px 28px; font-size: 16px; width: 100%; }
+  .btn-primary:hover { box-shadow: 0 6px 20px rgba(43,108,176,0.3); }
   .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-  /* Result Panel */
-  .result-panel {
-    position: sticky;
-    top: 92px;
-    height: fit-content;
-  }
-  .result-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-    color: var(--text-light);
-    text-align: center;
-  }
-  .result-placeholder svg { opacity: 0.3; margin-bottom: 16px; }
-  .result-placeholder p { font-size: 14px; }
-
-  /* Gauge */
-  .gauge-container {
-    text-align: center;
-    padding: 12px 0 20px;
-  }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .form-group { display: flex; flex-direction: column; gap: 3px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 12px; font-weight: 500; color: var(--text-light); }
+  .form-group input, .form-group select { padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 13px; color: var(--text); background: #fff; transition: border-color 0.2s; }
+  .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(43,108,176,0.12); }
+  .form-group input.filled { border-color: #68d391; background: #f0fff4; }
+  .section-header { grid-column: 1 / -1; margin-top: 16px; padding: 8px 0; font-size: 14px; font-weight: 600; color: var(--primary); border-top: 1px solid #edf2f7; cursor: pointer; display: flex; align-items: center; gap: 8px; user-select: none; }
+  .section-header:hover { color: var(--primary-light); }
+  .section-header .arrow { transition: transform 0.2s; font-size: 12px; }
+  .section-header.collapsed .arrow { transform: rotate(-90deg); }
+  .section-content { grid-column: 1 / -1; }
+  .section-content.collapsed { display: none; }
+  .result-panel { position: sticky; top: 92px; height: fit-content; }
+  .result-placeholder { display: flex; flex-direction: column; align-items: center; padding: 60px 20px; color: var(--text-light); text-align: center; }
+  .gauge-container { text-align: center; padding: 12px 0 20px; }
   .gauge-svg { width: 200px; height: 120px; }
-  .gauge-value {
-    font-size: 42px;
-    font-weight: 700;
-    margin-top: -8px;
-  }
+  .gauge-value { font-size: 42px; font-weight: 700; margin-top: -8px; }
   .gauge-label { font-size: 13px; color: var(--text-light); }
-
-  /* Decision Badge */
-  .decision-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 28px;
-    border-radius: 40px;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-  .decision-badge.approve {
-    background: #f0fff4;
-    color: #22543d;
-    border: 2px solid var(--accent);
-  }
-  .decision-badge.reject {
-    background: #fff5f5;
-    color: #9b2c2c;
-    border: 2px solid var(--danger);
-  }
-  .decision-badge.moderate {
-    background: #fffaf0;
-    color: #9c4221;
-    border: 2px solid var(--warning);
-  }
-
-  /* Score Breakdown */
-  .score-breakdown { margin-top: 20px; }
-  .score-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #f7fafc;
-    font-size: 13px;
-  }
-  .score-row:last-child { border-bottom: none; }
+  .decision-badge { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 28px; border-radius: 40px; font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+  .decision-badge.approve { background: #f0fff4; color: #22543d; border: 2px solid var(--accent); }
+  .decision-badge.reject { background: #fff5f5; color: #9b2c2c; border: 2px solid var(--danger); }
+  .decision-badge.moderate { background: #fffaf0; color: #9c4221; border: 2px solid var(--warning); }
+  .score-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f7fafc; font-size: 13px; }
   .score-row .key { color: var(--text-light); }
   .score-row .value { font-weight: 600; }
-
-  .factor-bar {
-    height: 4px;
-    border-radius: 4px;
-    background: #edf2f7;
-    margin-top: 4px;
-    overflow: hidden;
-  }
-  .factor-bar-fill {
-    height: 100%;
-    border-radius: 4px;
-    transition: width 0.6s ease;
-  }
+  .factor-bar { height: 4px; border-radius: 4px; background: #edf2f7; margin-top: 4px; overflow: hidden; }
+  .factor-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
   .factor-bar-fill.high { background: var(--danger); }
   .factor-bar-fill.medium { background: var(--warning); }
   .factor-bar-fill.low { background: var(--accent); }
-
-  /* Loading spinner */
-  .spinner {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255,255,255,0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    vertical-align: middle;
-  }
+  .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* Footer */
-  .footer {
-    text-align: center;
-    padding: 24px;
-    color: var(--text-light);
-    font-size: 13px;
-    border-top: 1px solid var(--border);
-    max-width: 1320px;
-    margin: 0 auto;
-  }
-  .footer strong { color: var(--text); }
-
-  /* Responsive */
-  @media (max-width: 900px) {
-    .container { grid-template-columns: 1fr; }
-    .form-grid { grid-template-columns: 1fr; }
-    .result-panel { position: static; }
-    .header h1 { font-size: 16px; }
-  }
-
-  /* Toast notification */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    padding: 14px 24px;
-    border-radius: 10px;
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    transform: translateY(100px);
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    z-index: 999;
-  }
+  .footer { text-align: center; padding: 24px; color: var(--text-light); font-size: 13px; border-top: 1px solid var(--border); max-width: 1400px; margin: 0 auto; }
+  .toast { position: fixed; bottom: 24px; right: 24px; padding: 14px 24px; border-radius: 10px; color: white; font-size: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 999; }
   .toast.show { transform: translateY(0); opacity: 1; }
   .toast.error { background: var(--danger); }
   .toast.success { background: var(--accent-dark); }
-
-  .model-status {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
-    color: var(--text-light);
-  }
-  .status-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-  }
+  .toast.info { background: var(--primary-light); }
+  .model-status { display: flex; align-items: center; gap: 6px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-light); }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; }
   .status-dot.online { background: var(--accent); }
-  .status-dot.offline { background: var(--danger); }
+  .features-count { font-size: 12px; color: var(--text-light); margin-left: auto; }
+  .features-count .filled-count { color: var(--accent-dark); font-weight: 600; }
+  @media (max-width: 900px) { .container { grid-template-columns: 1fr; } .form-grid { grid-template-columns: 1fr 1fr; } .result-panel { position: static; } }
 </style>
 </head>
 <body>
@@ -312,470 +93,316 @@
 </header>
 
 <div class="container">
-
-  <!-- Left: Application Form -->
   <div>
     <div class="card">
       <div class="card-title">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2b6cb0" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         Loan Application
+        <span class="features-count"><span class="filled-count" id="filledCount">0</span> / 197 features populated</span>
       </div>
-      <form id="appForm" class="form-grid">
 
-        <div class="form-group">
-          <label for="CODE_GENDER">Gender</label>
-          <select id="CODE_GENDER" name="CODE_GENDER">
-            <option value="M">Male</option>
-            <option value="F" selected>Female</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="FLAG_OWN_CAR">Owns a Car</label>
-          <select id="FLAG_OWN_CAR" name="FLAG_OWN_CAR">
-            <option value="N">No</option>
-            <option value="Y" selected>Yes</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="FLAG_OWN_REALTY">Owns Property</label>
-          <select id="FLAG_OWN_REALTY" name="FLAG_OWN_REALTY">
-            <option value="N">No</option>
-            <option value="Y" selected>Yes</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="CNT_CHILDREN">Children</label>
-          <input type="number" id="CNT_CHILDREN" name="CNT_CHILDREN" value="0" min="0" max="20">
-        </div>
-
-        <div class="form-group full">
-          <label for="NAME_INCOME_TYPE">Income Type</label>
-          <select id="NAME_INCOME_TYPE" name="NAME_INCOME_TYPE">
-            <option value="Working">Working</option>
-            <option value="Commercial associate">Commercial associate</option>
-            <option value="Pensioner">Pensioner</option>
-            <option value="State servant">State servant</option>
-            <option value="Student">Student</option>
-            <option value="Unemployed">Unemployed</option>
-            <option value="Business Owner">Business Owner</option>
-            <option value="Maternity leave">Maternity leave</option>
-          </select>
-        </div>
-
-        <div class="form-group full">
-          <label for="NAME_EDUCATION_TYPE">Education Level</label>
-          <select id="NAME_EDUCATION_TYPE" name="NAME_EDUCATION_TYPE">
-            <option value="Secondary / secondary special">Secondary</option>
-            <option value="Higher education" selected>Higher education</option>
-            <option value="Incomplete higher">Incomplete higher</option>
-            <option value="Lower secondary">Lower secondary</option>
-            <option value="Academic degree">Academic degree</option>
-          </select>
-        </div>
-
-        <div class="form-group full">
-          <label for="NAME_FAMILY_STATUS">Family Status</label>
-          <select id="NAME_FAMILY_STATUS" name="NAME_FAMILY_STATUS">
-            <option value="Married" selected>Married</option>
-            <option value="Single / not married">Single</option>
-            <option value="Civil marriage">Civil marriage</option>
-            <option value="Separated">Separated</option>
-            <option value="Widow">Widow</option>
-          </select>
-        </div>
-
-        <div class="form-group full">
-          <label for="OCCUPATION_TYPE">Occupation</label>
-          <select id="OCCUPATION_TYPE" name="OCCUPATION_TYPE">
-            <option value="">Select occupation</option>
-            <option value="Laborers">Laborers</option>
-            <option value="Core staff" selected>Core staff</option>
-            <option value="Sales staff">Sales staff</option>
-            <option value="Managers">Managers</option>
-            <option value="Drivers">Drivers</option>
-            <option value="High skill tech staff">High skill tech staff</option>
-            <option value="Accountants">Accountants</option>
-            <option value="Medicine staff">Medicine staff</option>
-            <option value="Security staff">Security staff</option>
-            <option value="Cleaning staff">Cleaning staff</option>
-            <option value="Private service staff">Private service staff</option>
-            <option value="Low-skill Laborers">Low-skill Laborers</option>
-            <option value="Cooking staff">Cooking staff</option>
-            <option value="IT staff">IT staff</option>
-            <option value="Realty agents">Realty agents</option>
-            <option value="HR staff">HR staff</option>
-            <option value="Waiters/barmen staff">Waiters/barmen staff</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="AMT_INCOME_TOTAL">Annual Income ($)</label>
-          <input type="number" id="AMT_INCOME_TOTAL" name="AMT_INCOME_TOTAL" value="180000" min="0" step="1000">
-          <span class="hint">Gross annual income</span>
-        </div>
-
-        <div class="form-group">
-          <label for="AMT_CREDIT">Loan Amount ($)</label>
-          <input type="number" id="AMT_CREDIT" name="AMT_CREDIT" value="450000" min="0" step="10000">
-          <span class="hint">Total credit requested</span>
-        </div>
-
-        <div class="form-group">
-          <label for="AMT_ANNUITY">Annual Payment ($)</label>
-          <input type="number" id="AMT_ANNUITY" name="AMT_ANNUITY" value="27000" min="0" step="500">
-          <span class="hint">Yearly installment</span>
-        </div>
-
-        <div class="form-group">
-          <label for="AMT_GOODS_PRICE">Property Value ($)</label>
-          <input type="number" id="AMT_GOODS_PRICE" name="AMT_GOODS_PRICE" value="540000" min="0" step="10000">
-          <span class="hint">Appraised value</span>
-        </div>
-
-        <div class="form-group">
-          <label for="age">Age (years)</label>
-          <input type="number" id="age" name="age" value="35" min="18" max="100">
-          <span class="hint">Applicant&rsquo;s age</span>
-        </div>
-
-        <div class="form-group">
-          <label for="YEARS_EMPLOYED">Years Employed</label>
-          <input type="number" id="YEARS_EMPLOYED" name="YEARS_EMPLOYED" value="8" min="0" max="60" step="0.5">
-          <span class="hint">Years in current role</span>
-        </div>
-
-        <div class="form-group">
-          <label for="EXT_SOURCE_2">Credit Score A (0&ndash;1)</label>
-          <input type="number" id="EXT_SOURCE_2" name="EXT_SOURCE_2" value="0.65" min="0" max="1" step="0.01">
-          <span class="hint">External bureau score</span>
-        </div>
-
-        <div class="form-group">
-          <label for="EXT_SOURCE_3">Credit Score B (0&ndash;1)</label>
-          <input type="number" id="EXT_SOURCE_3" name="EXT_SOURCE_3" value="0.60" min="0" max="1" step="0.01">
-          <span class="hint">Alternative credit score</span>
-        </div>
-
-        <div class="form-group full" style="grid-column:1/-1; margin-top:8px; padding-top:12px; border-top:1px solid #edf2f7;">
-          <strong style="font-size:13px; color:var(--primary);">Credit Bureau &amp; History</strong>
-        </div>
-
-        <div class="form-group">
-          <label for="EXT_SOURCE_1">Credit Score C (0&ndash;1)</label>
-          <input type="number" id="EXT_SOURCE_1" name="EXT_SOURCE_1" value="0.55" min="0" max="1" step="0.01">
-          <span class="hint">Third external bureau score</span>
-        </div>
-
-        <div class="form-group">
-          <label for="bureau_loan_count">Bureau Loan Count</label>
-          <input type="number" id="bureau_loan_count" name="bureau_loan_count" value="4" min="0" max="100">
-          <span class="hint">Active loans at bureaus</span>
-        </div>
-
-        <div class="form-group">
-          <label for="debt_to_credit_ratio">Debt-to-Credit Ratio</label>
-          <input type="number" id="debt_to_credit_ratio" name="debt_to_credit_ratio" value="0.35" min="0" max="10" step="0.01">
-          <span class="hint">Total debt / total credit</span>
-        </div>
-
-        <div class="form-group">
-          <label for="recent_avg_debt">Avg Recent Debt ($)</label>
-          <input type="number" id="recent_avg_debt" name="recent_avg_debt" value="50000" min="0" step="1000">
-          <span class="hint">Average current debt at bureaus</span>
-        </div>
-
-        <div class="form-group">
-          <label for="avg_pct_late">% Late Payments</label>
-          <input type="number" id="avg_pct_late" name="avg_pct_late" value="0.10" min="0" max="1" step="0.01">
-          <span class="hint">Fraction of installments paid late</span>
-        </div>
-
-        <div class="form-group">
-          <label for="max_delay_last_6_all">Max Delay (last 6mo, days)</label>
-          <input type="number" id="max_delay_last_6_all" name="max_delay_last_6_all" value="5" min="0" max="180">
-          <span class="hint">Worst payment delay in last 6 months</span>
-        </div>
-
-        <div class="form-group">
-          <label for="avg_latest_installments_left">Installments Remaining</label>
-          <input type="number" id="avg_latest_installments_left" name="avg_latest_installments_left" value="12" min="0" max="120">
-          <span class="hint">Avg installments left on active loans</span>
-        </div>
-
-        <div class="form-group">
-          <label for="rejection_rate">Previous Rejection Rate</label>
-          <input type="number" id="rejection_rate" name="rejection_rate" value="0.20" min="0" max="1" step="0.01">
-          <span class="hint">Fraction of past applications rejected</span>
-        </div>
-
-        <div class="form-group">
-          <label for="num_pos_loans">Active POS/Cash Loans</label>
-          <input type="number" id="num_pos_loans" name="num_pos_loans" value="1" min="0" max="50">
-          <span class="hint">Point-of-sale cash loans active</span>
-        </div>
-
-        <div class="form-group">
-          <label for="credit_to_goods_ratio">Credit-to-Goods Ratio</label>
-          <input type="number" id="credit_to_goods_ratio" name="credit_to_goods_ratio" value="0.83" min="0" max="5" step="0.01">
-          <span class="hint">Loan amount / property value</span>
-        </div>
-
-        <div class="form-group">
-          <label for="NAME_HOUSING_TYPE">Housing Type</label>
-          <select id="NAME_HOUSING_TYPE" name="NAME_HOUSING_TYPE">
-            <option value="House / apartment" selected>House / apartment</option>
-            <option value="With parents">With parents</option>
-            <option value="Municipal apartment">Municipal apartment</option>
-            <option value="Rented apartment">Rented apartment</option>
-            <option value="Office apartment">Office apartment</option>
-            <option value="Co-op apartment">Co-op apartment</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="NAME_TYPE_SUITE">Application Type</label>
-          <select id="NAME_TYPE_SUITE" name="NAME_TYPE_SUITE">
-            <option value="Unaccompanied">Unaccompanied</option>
-            <option value="Family" selected>Family</option>
-            <option value="Spouse, partner">Spouse / partner</option>
-            <option value="Children">Children</option>
-            <option value="Other_B">Other</option>
-            <option value="Other_A">Other (A)</option>
-            <option value="Group of people">Group of people</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn-primary" id="assessBtn">
-          Assess Application
+      <div class="toolbar">
+        <button class="btn btn-sample" id="loadSampleBtn" onclick="loadSample()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Load Sample Application
         </button>
+        <button class="btn btn-clear" onclick="clearForm()">Clear</button>
+        <span id="sampleInfo" style="font-size:12px;color:var(--text-light);line-height:38px;"></span>
+      </div>
+
+      <form id="appForm" class="form-grid" onsubmit="return false">
+        <div id="formFields"></div>
+        <button type="submit" class="btn-primary" id="assessBtn" onclick="assess()" style="grid-column:1/-1;margin-top:8px">Assess Application</button>
       </form>
     </div>
   </div>
 
-  <!-- Right: Result Panel -->
   <div class="result-panel">
     <div class="card" id="resultCard">
       <div class="card-title">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2b6cb0" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
         Assessment Result
       </div>
-
-      <!-- Placeholder when no result -->
       <div id="resultPlaceholder" class="result-placeholder">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#cbd5e0" stroke-width="1.5">
-          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-        </svg>
-        <p>Complete the form and click <strong>Assess Application</strong> to see the risk evaluation.</p>
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#cbd5e0" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <p>Click <strong>Load Sample</strong> for a complete application, or fill in fields manually.</p>
       </div>
-
-      <!-- Actual result -->
       <div id="resultContent" style="display:none">
-
         <div class="gauge-container">
           <svg class="gauge-svg" viewBox="0 0 200 120">
             <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#edf2f7" stroke-width="14" stroke-linecap="round"/>
-            <path id="gaugeArc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round"
-                  stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 0.8s ease"/>
-            <defs>
-              <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#48bb78"/>
-                <stop offset="50%" stop-color="#ed8936"/>
-                <stop offset="100%" stop-color="#e53e3e"/>
-              </linearGradient>
-            </defs>
+            <path id="gaugeArc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 0.8s ease"/>
+            <defs><linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#48bb78"/><stop offset="50%" stop-color="#ed8936"/><stop offset="100%" stop-color="#e53e3e"/></linearGradient></defs>
           </svg>
           <div id="gaugeValue" class="gauge-value">0.00</div>
           <div class="gauge-label">Default Probability</div>
         </div>
-
-        <div id="decisionBadge" class="decision-badge" style="justify-content:center; margin-bottom: 16px;">
-          &mdash;
-        </div>
-
+        <div id="decisionBadge" class="decision-badge" style="margin-bottom:16px">&mdash;</div>
         <div class="score-breakdown">
-          <div class="score-row">
-            <span class="key">Risk Score</span>
-            <span class="value" id="detailScore">0.00</span>
-          </div>
-          <div class="score-row">
-            <span class="key">Decision Threshold</span>
-            <span class="value" id="detailThreshold">0.50</span>
-          </div>
-          <div class="score-row">
-            <span class="key">Ensemble Models</span>
-            <span class="value" id="detailModels">5</span>
-          </div>
+          <div class="score-row"><span class="key">Risk Score</span><span class="value" id="detailScore">0.00</span></div>
+          <div class="score-row"><span class="key">Decision Threshold</span><span class="value" id="detailThreshold">0.08</span></div>
+          <div class="score-row"><span class="key">Ensemble Models</span><span class="value" id="detailModels">5</span></div>
+          <div class="score-row"><span class="key">Features Provided</span><span class="value" id="detailFeatures">0 / 197</span></div>
         </div>
-
-        <!-- Top risk factors -->
-        <div style="margin-top: 20px;">
-          <div style="font-size:13px; font-weight:600; color:var(--text-light); margin-bottom: 10px;">KEY FACTORS</div>
+        <div style="margin-top:20px">
+          <div style="font-size:13px;font-weight:600;color:var(--text-light);margin-bottom:10px">KEY RISK FACTORS</div>
           <div id="factorsList"></div>
         </div>
-
         <div class="model-status">
-          <span class="status-dot online" id="statusDot"></span>
-          <span id="statusText">Models loaded and ready</span>
+          <span class="status-dot online"></span>
+          <span>Models loaded and ready</span>
         </div>
       </div>
-
-      <!-- Error message -->
       <div id="resultError" style="display:none">
-        <div style="text-align:center; padding: 30px 20px; color: var(--danger);">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:10px">
-            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
-          </svg>
-          <p id="errorMessage" style="font-size:14px;">An error occurred.</p>
+        <div style="text-align:center;padding:30px 20px;color:var(--danger)">
+          <p id="errorMessage" style="font-size:14px">An error occurred.</p>
         </div>
       </div>
     </div>
   </div>
-
 </div>
 
-<footer class="footer">
-  <strong>Fair Loan Approval</strong> &mdash; Data-driven lending decisions &bull; Built with CatBoost &amp; FastAPI
-</footer>
-
+<footer class="footer"><strong>Fair Loan Approval</strong> &mdash; Data-driven lending decisions &bull; 197 features &bull; CatBoost ensemble</footer>
 <div id="toast" class="toast"></div>
 
 <script>
-const API_BASE = window.location.origin;
+const API = window.location.origin;
+let FEATURE_SCHEMA = null;
 
-// Static key factors for display (always shown after prediction)
-const KEY_FACTORS = [
-  { key: "External risk score A (EXT_SOURCE_2)", weight: 13.8 },
-  { key: "External risk score B (EXT_SOURCE_3)", weight: 13.6 },
-  { key: "External risk score C (EXT_SOURCE_1)", weight: 5.1 },
-  { key: "Age (DAYS_BIRTH)", weight: 3.3 },
-  { key: "Debt-to-credit ratio", weight: 2.7 },
-  { key: "Installments remaining", weight: 2.5 },
-  { key: "Loan amount (AMT_CREDIT)", weight: 2.6 },
-  { key: "% Late payments", weight: 2.0 },
-  { key: "Previous rejection rate", weight: 1.8 },
+const SECTIONS = [
+  { title: "Application Basics", start: 0, end: 38 },
+  { title: "External Credit Scores", start: 39, end: 41 },
+  { title: "Building / Property Info", start: 42, end: 88 },
+  { title: "Social Circle", start: 89, end: 92 },
+  { title: "Phone & Documents", start: 93, end: 113 },
+  { title: "Credit Bureau Inquiries", start: 114, end: 119 },
+  { title: "Bureau History", start: 120, end: 141 },
+  { title: "Previous Applications", start: 142, end: 163 },
+  { title: "Credit Card Balance", start: 164, end: 178 },
+  { title: "Installment Payments", start: 179, end: 187 },
+  { title: "POS Cash Loans", start: 188, end: 196 },
 ];
 
-document.getElementById('appForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const btn = document.getElementById('assessBtn');
+const KEY_FACTORS = [
+  { key: "EXT_SOURCE_2", label: "External Score A", weight: 13.8 },
+  { key: "EXT_SOURCE_3", label: "External Score B", weight: 13.6 },
+  { key: "EXT_SOURCE_1", label: "External Score C", weight: 5.1 },
+  { key: "DAYS_BIRTH", label: "Age", weight: 3.3 },
+  { key: "debt_to_credit_ratio", label: "Debt-to-Credit", weight: 2.7 },
+  { key: "AMT_CREDIT", label: "Loan Amount", weight: 2.6 },
+  { key: "avg_latest_installments_left", label: "Installments Left", weight: 2.5 },
+  { key: "avg_pct_late", label: "% Late Payments", weight: 2.0 },
+  { key: "rejection_rate", label: "Rejection Rate", weight: 1.8 },
+];
+
+async function init() {
+  try {
+    const resp = await fetch(`${API}/features`);
+    const data = await resp.json();
+    FEATURE_SCHEMA = { columns: data.columns, categorical: new Set(data.categorical) };
+    buildForm(data.columns, data.categorical);
+  } catch (e) {
+    showToast("Failed to load feature schema: " + e.message, "error");
+  }
+}
+
+function buildForm(columns, categorical) {
+  const catSet = new Set(categorical);
+  const container = document.getElementById("formFields");
+  container.innerHTML = "";
+
+  // Special mappings for user-friendly labels
+  const labels = {
+    "CODE_GENDER": "Gender", "FLAG_OWN_CAR": "Owns Car", "FLAG_OWN_REALTY": "Owns Property",
+    "CNT_CHILDREN": "Children", "AMT_INCOME_TOTAL": "Annual Income ($)", "AMT_CREDIT": "Loan Amount ($)",
+    "AMT_ANNUITY": "Annual Payment ($)", "AMT_GOODS_PRICE": "Property Value ($)",
+    "DAYS_BIRTH": "Days Birth (negative)", "DAYS_EMPLOYED": "Days Employed (negative)",
+    "EXT_SOURCE_1": "Credit Score 1 (0-1)", "EXT_SOURCE_2": "Credit Score 2 (0-1)", "EXT_SOURCE_3": "Credit Score 3 (0-1)",
+    "OCCUPATION_TYPE": "Occupation", "NAME_INCOME_TYPE": "Income Type", "NAME_EDUCATION_TYPE": "Education",
+    "NAME_FAMILY_STATUS": "Family Status", "NAME_HOUSING_TYPE": "Housing Type",
+    "bureau_loan_count": "Bureau Loans", "debt_to_credit_ratio": "Debt/Credit Ratio",
+    "avg_pct_late": "% Late Payments", "rejection_rate": "Rejection Rate",
+  };
+
+  SECTIONS.forEach((section, si) => {
+    const header = document.createElement("div");
+    header.className = "section-header" + (si > 2 ? " collapsed" : "");
+    header.innerHTML = `<span class="arrow">&#9660;</span> ${section.title}`;
+    header.onclick = () => toggleSection(header, content);
+
+    const content = document.createElement("div");
+    content.className = "section-content" + (si > 2 ? " collapsed" : "");
+
+    for (let i = section.start; i <= section.end && i < columns.length; i++) {
+      const col = columns[i];
+      const isCat = catSet.has(col);
+      const group = document.createElement("div");
+      group.className = "form-group";
+
+      const labelEl = document.createElement("label");
+      labelEl.textContent = labels[col] || col.replace(/_/g, " ").toLowerCase();
+      labelEl.title = col;
+      group.appendChild(labelEl);
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.id = "f_" + col;
+      input.name = col;
+      input.dataset.feature = col;
+      input.placeholder = isCat ? "text" : "number";
+      input.addEventListener("input", updateFilledCount);
+      group.appendChild(input);
+
+      content.appendChild(group);
+    }
+    container.appendChild(header);
+    container.appendChild(content);
+  });
+}
+
+function toggleSection(header, content) {
+  header.classList.toggle("collapsed");
+  content.classList.toggle("collapsed");
+}
+
+function updateFilledCount() {
+  const inputs = document.querySelectorAll("#formFields input[data-feature]");
+  let filled = 0;
+  inputs.forEach(inp => {
+    if (inp.value.trim() !== "") {
+      filled++;
+      inp.classList.add("filled");
+    } else {
+      inp.classList.remove("filled");
+    }
+  });
+  document.getElementById("filledCount").textContent = filled;
+}
+
+async function loadSample() {
+  const btn = document.getElementById("loadSampleBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner" style="border-color:rgba(255,255,255,0.3);border-top-color:white"></span> Loading...';
+  try {
+    const resp = await fetch(`${API}/sample`);
+    if (!resp.ok) throw new Error("Server error " + resp.status);
+    const data = await resp.json();
+    const app = data.application;
+
+    Object.entries(app).forEach(([key, val]) => {
+      const input = document.getElementById("f_" + key);
+      if (input) {
+        if (val !== null && val !== undefined) {
+          input.value = typeof val === "number" ? val : String(val);
+        } else {
+          input.value = "";
+        }
+      }
+    });
+    updateFilledCount();
+    document.getElementById("sampleInfo").textContent = `Sample #${data.index} of ${data.total}`;
+    showToast("Sample application loaded (" + Object.values(app).filter(v => v !== null).length + " features)", "success");
+  } catch (e) {
+    showToast("Failed to load sample: " + e.message, "error");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Load Sample Application';
+  }
+}
+
+function clearForm() {
+  document.querySelectorAll("#formFields input").forEach(inp => { inp.value = ""; inp.classList.remove("filled"); });
+  updateFilledCount();
+  document.getElementById("sampleInfo").textContent = "";
+}
+
+async function assess() {
+  const btn = document.getElementById("assessBtn");
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Assessing...';
 
-  const formData = new FormData(this);
-  const age = parseInt(formData.get('age')) || 35;
-  const yearsEmployed = parseFloat(formData.get('YEARS_EMPLOYED')) || 0;
-
   const payload = {};
-  for (const [key, value] of formData) {
-    if (!['age', 'YEARS_EMPLOYED'].includes(key)) {
-      const num = parseFloat(value);
-      payload[key] = isNaN(num) ? value : num;
+  let count = 0;
+  document.querySelectorAll("#formFields input[data-feature]").forEach(inp => {
+    const val = inp.value.trim();
+    if (val !== "") {
+      const num = parseFloat(val);
+      payload[inp.dataset.feature] = isNaN(num) ? val : num;
+      count++;
     }
-  }
-  payload['DAYS_BIRTH'] = -Math.round(age * 365.25);
-  payload['DAYS_EMPLOYED'] = -Math.round(yearsEmployed * 365.25);
-  payload['OWN_CAR_AGE'] = payload['FLAG_OWN_CAR'] === 'Y' ? 5.0 : null;
-
-  try {
-    const resp = await fetch(`${API_BASE}/predict`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    if (!resp.ok) {
-      const errBody = await resp.json().catch(() => ({}));
-      throw new Error(errBody.detail || `Server error ${resp.status}`);
-    }
-
-    const result = await resp.json();
-    showResult(result);
-
-  } catch (err) {
-    showError(err.message);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Assess Application';
-  }
-});
-
-function showResult(result) {
-  document.getElementById('resultPlaceholder').style.display = 'none';
-  document.getElementById('resultError').style.display = 'none';
-  const content = document.getElementById('resultContent');
-  content.style.display = 'block';
-
-  const score = result.score;
-  const decision = result.decision;
-  const threshold = result.threshold;
-
-  // Gauge
-  const arc = document.getElementById('gaugeArc');
-  const maxOffset = 251.2;
-  const offset = maxOffset * (1 - Math.min(score, 1));
-  setTimeout(() => { arc.style.strokeDashoffset = offset; }, 50);
-
-  document.getElementById('gaugeValue').textContent = (score * 100).toFixed(1) + '%';
-  document.getElementById('gaugeValue').style.color =
-    score < 0.3 ? 'var(--accent)' : score < 0.6 ? 'var(--warning)' : 'var(--danger)';
-
-  // Decision badge
-  const badge = document.getElementById('decisionBadge');
-  badge.className = 'decision-badge ' + (
-    decision === 'approve' ? 'approve' :
-    decision === 'reject' ? 'reject' : 'moderate'
-  );
-  badge.innerHTML = decision === 'approve'
-    ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> APPROVED'
-    : decision === 'reject'
-    ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> REJECTED'
-    : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg> REVIEW NEEDED';
-
-  // Details
-  document.getElementById('detailScore').textContent = (score * 100).toFixed(2) + '%';
-  document.getElementById('detailThreshold').textContent = (threshold * 100).toFixed(0) + '%';
-
-  // Factors
-  const factorsList = document.getElementById('factorsList');
-  factorsList.innerHTML = '';
-  const topFactors = KEY_FACTORS.slice(0, 5);
-  topFactors.forEach(f => {
-    const pct = (f.weight / 30 * 100).toFixed(0);
-    const barClass = parseInt(pct) > 30 ? 'high' : parseInt(pct) > 15 ? 'medium' : 'low';
-    const row = document.createElement('div');
-    row.innerHTML = `
-      <div class="score-row">
-        <span class="key">${f.key}</span>
-        <span class="value">${pct}%</span>
-      </div>
-      <div class="factor-bar">
-        <div class="factor-bar-fill ${barClass}" style="width:${pct}%"></div>
-      </div>
-    `;
-    factorsList.appendChild(row);
   });
 
-  showToast('Assessment complete', 'success');
+  if (count === 0) { showToast("Please fill in some fields or load a sample first", "error"); btn.disabled = false; btn.textContent = "Assess Application"; return; }
+
+  try {
+    const resp = await fetch(`${API}/predict`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) { const e = await resp.json().catch(() => ({})); throw new Error(e.detail || `Server error ${resp.status}`); }
+    const result = await resp.json();
+    showResult(result, count);
+  } catch (e) {
+    showError(e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Assess Application";
+  }
+}
+
+function showResult(result, featureCount) {
+  document.getElementById("resultPlaceholder").style.display = "none";
+  document.getElementById("resultError").style.display = "none";
+  document.getElementById("resultContent").style.display = "block";
+
+  const score = result.score;
+  const arc = document.getElementById("gaugeArc");
+  setTimeout(() => { arc.style.strokeDashoffset = 251.2 * (1 - Math.min(score, 1)); }, 50);
+
+  const gv = document.getElementById("gaugeValue");
+  gv.textContent = (score * 100).toFixed(1) + "%";
+  gv.style.color = score < 0.08 ? "var(--accent)" : score < 0.3 ? "var(--warning)" : "var(--danger)";
+
+  const badge = document.getElementById("decisionBadge");
+  const dec = result.decision;
+  badge.className = "decision-badge " + (dec === "approve" ? "approve" : dec === "reject" ? "reject" : "moderate");
+  badge.innerHTML = dec === "approve"
+    ? "&#10003; APPROVED"
+    : dec === "reject"
+    ? "&#10007; REJECTED"
+    : "&#9888; REVIEW NEEDED";
+
+  document.getElementById("detailScore").textContent = (score * 100).toFixed(2) + "%";
+  document.getElementById("detailThreshold").textContent = (result.threshold * 100).toFixed(0) + "%";
+  document.getElementById("detailFeatures").textContent = featureCount + " / 197";
+
+  const factorsList = document.getElementById("factorsList");
+  factorsList.innerHTML = "";
+  KEY_FACTORS.forEach(f => {
+    const pct = Math.round(f.weight / 30 * 100);
+    const barClass = pct > 30 ? "high" : pct > 15 ? "medium" : "low";
+    const row = document.createElement("div");
+    row.innerHTML = `<div class="score-row"><span class="key">${f.label}</span><span class="value">${pct}%</span></div><div class="factor-bar"><div class="factor-bar-fill ${barClass}" style="width:${pct}%"></div></div>`;
+    factorsList.appendChild(row);
+  });
+  showToast("Assessment complete (" + featureCount + " features)", "success");
 }
 
 function showError(msg) {
-  document.getElementById('resultPlaceholder').style.display = 'none';
-  document.getElementById('resultContent').style.display = 'none';
-  const errDiv = document.getElementById('resultError');
-  errDiv.style.display = 'block';
-  document.getElementById('errorMessage').textContent = msg;
+  document.getElementById("resultPlaceholder").style.display = "none";
+  document.getElementById("resultContent").style.display = "none";
+  document.getElementById("resultError").style.display = "block";
+  document.getElementById("errorMessage").textContent = msg;
 }
 
 function showToast(msg, type) {
-  const toast = document.getElementById('toast');
+  const toast = document.getElementById("toast");
   toast.textContent = msg;
-  toast.className = `toast ${type} show`;
-  setTimeout(() => toast.classList.remove('show'), 3500);
+  toast.className = "toast " + type + " show";
+  setTimeout(() => toast.classList.remove("show"), 3500);
 }
-</script>
 
+init();
+</script>
 </body>
 </html>

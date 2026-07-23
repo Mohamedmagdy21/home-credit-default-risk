@@ -13,17 +13,21 @@ POST /predict_batch   -> list of applications -> list of results
 from __future__ import annotations
 
 import os
+import random
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
 
 import numpy as np
+import pandas as pd
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from config.config import DEFAULT_CONFIG
+from src.data.loader import load_all
+from src.features.builder import build_train_dataset, build_test_dataset
 from src.serving.ensemble import ModelEnsemble
 from src.utils.logger import setup_logger
 
@@ -32,6 +36,27 @@ logger = setup_logger(__name__)
 DECISION_THRESHOLD = float(os.environ.get("DECISION_THRESHOLD", "0.08"))
 
 ensemble: ModelEnsemble | None = None
+_test_cache: pd.DataFrame | None = None
+
+
+def _get_test_data() -> pd.DataFrame:
+    """Lazily load and cache the full merged test dataset (all 197 features)."""
+    global _test_cache
+    if _test_cache is not None:
+        return _test_cache
+    logger.info("Loading test data for /sample endpoint (first call)...")
+    frames = load_all(DEFAULT_CONFIG.data_dir, DEFAULT_CONFIG.data_files)
+    X, _, _ = build_train_dataset(
+        frames, target=DEFAULT_CONFIG.target, id_column=DEFAULT_CONFIG.id_column
+    )
+    X_test, _ = build_test_dataset(
+        frames,
+        id_column=DEFAULT_CONFIG.id_column,
+        train_columns=list(X.columns),
+    )
+    _test_cache = X_test
+    logger.info("Test data cached: %s", X_test.shape)
+    return _test_cache
 
 
 @asynccontextmanager
@@ -147,3 +172,43 @@ def predict_batch(req: BatchRequest) -> BatchResponse:
         raise HTTPException(status_code=400, detail=f"Prediction error: {e}")
     results = [_result(float(s)) for s in scores]
     return BatchResponse(results=results, n=len(results))
+
+
+def _row_to_dict(row: pd.Series) -> dict:
+    """Convert a pandas Series to a JSON-serializable dict (native types)."""
+    result = {}
+    for k, v in row.items():
+        if pd.isna(v):
+            result[k] = None
+        elif hasattr(v, "item"):
+            result[k] = v.item()
+        else:
+            result[k] = v
+    return result
+
+
+@app.get("/sample")
+def sample() -> dict:
+    """Return a random complete application with all 197 features populated."""
+    test_df = _get_test_data()
+    idx = random.randint(0, len(test_df) - 1)
+    row = test_df.iloc[idx]
+    return {
+        "index": idx,
+        "total": len(test_df),
+        "application": _row_to_dict(row),
+    }
+
+
+@app.get("/sample/{index}")
+def sample_by_index(index: int) -> dict:
+    """Return a specific application by its row index."""
+    test_df = _get_test_data()
+    if index < 0 or index >= len(test_df):
+        raise HTTPException(status_code=404, detail=f"Index out of range (0-{len(test_df)-1})")
+    row = test_df.iloc[index]
+    return {
+        "index": index,
+        "total": len(test_df),
+        "application": _row_to_dict(row),
+    }
