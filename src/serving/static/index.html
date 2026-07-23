@@ -459,6 +459,70 @@
           <span class="hint">Alternative credit score</span>
         </div>
 
+        <div class="form-group full" style="grid-column:1/-1; margin-top:8px; padding-top:12px; border-top:1px solid #edf2f7;">
+          <strong style="font-size:13px; color:var(--primary);">Credit Bureau &amp; History</strong>
+        </div>
+
+        <div class="form-group">
+          <label for="EXT_SOURCE_1">Credit Score C (0&ndash;1)</label>
+          <input type="number" id="EXT_SOURCE_1" name="EXT_SOURCE_1" value="0.55" min="0" max="1" step="0.01">
+          <span class="hint">Third external bureau score</span>
+        </div>
+
+        <div class="form-group">
+          <label for="bureau_loan_count">Bureau Loan Count</label>
+          <input type="number" id="bureau_loan_count" name="bureau_loan_count" value="4" min="0" max="100">
+          <span class="hint">Active loans at bureaus</span>
+        </div>
+
+        <div class="form-group">
+          <label for="debt_to_credit_ratio">Debt-to-Credit Ratio</label>
+          <input type="number" id="debt_to_credit_ratio" name="debt_to_credit_ratio" value="0.35" min="0" max="10" step="0.01">
+          <span class="hint">Total debt / total credit</span>
+        </div>
+
+        <div class="form-group">
+          <label for="recent_avg_debt">Avg Recent Debt ($)</label>
+          <input type="number" id="recent_avg_debt" name="recent_avg_debt" value="50000" min="0" step="1000">
+          <span class="hint">Average current debt at bureaus</span>
+        </div>
+
+        <div class="form-group">
+          <label for="avg_pct_late">% Late Payments</label>
+          <input type="number" id="avg_pct_late" name="avg_pct_late" value="0.10" min="0" max="1" step="0.01">
+          <span class="hint">Fraction of installments paid late</span>
+        </div>
+
+        <div class="form-group">
+          <label for="max_delay_last_6_all">Max Delay (last 6mo, days)</label>
+          <input type="number" id="max_delay_last_6_all" name="max_delay_last_6_all" value="5" min="0" max="180">
+          <span class="hint">Worst payment delay in last 6 months</span>
+        </div>
+
+        <div class="form-group">
+          <label for="avg_latest_installments_left">Installments Remaining</label>
+          <input type="number" id="avg_latest_installments_left" name="avg_latest_installments_left" value="12" min="0" max="120">
+          <span class="hint">Avg installments left on active loans</span>
+        </div>
+
+        <div class="form-group">
+          <label for="rejection_rate">Previous Rejection Rate</label>
+          <input type="number" id="rejection_rate" name="rejection_rate" value="0.20" min="0" max="1" step="0.01">
+          <span class="hint">Fraction of past applications rejected</span>
+        </div>
+
+        <div class="form-group">
+          <label for="num_pos_loans">Active POS/Cash Loans</label>
+          <input type="number" id="num_pos_loans" name="num_pos_loans" value="1" min="0" max="50">
+          <span class="hint">Point-of-sale cash loans active</span>
+        </div>
+
+        <div class="form-group">
+          <label for="credit_to_goods_ratio">Credit-to-Goods Ratio</label>
+          <input type="number" id="credit_to_goods_ratio" name="credit_to_goods_ratio" value="0.83" min="0" max="5" step="0.01">
+          <span class="hint">Loan amount / property value</span>
+        </div>
+
         <div class="form-group">
           <label for="NAME_HOUSING_TYPE">Housing Type</label>
           <select id="NAME_HOUSING_TYPE" name="NAME_HOUSING_TYPE">
@@ -583,14 +647,15 @@ const API_BASE = window.location.origin;
 
 // Static key factors for display (always shown after prediction)
 const KEY_FACTORS = [
-  { key: "External risk score A (EXT_SOURCE_2)", weight: 13.8, higher: "lower" },
-  { key: "External risk score B (EXT_SOURCE_3)", weight: 13.6, higher: "lower" },
-  { key: "Age (DAYS_BIRTH)", weight: 3.3, higher: "medium" },
-  { key: "Debt-to-credit ratio", weight: 2.7, higher: "higher" },
-  { key: "Loan amount (AMT_CREDIT)", weight: 2.6, higher: "higher" },
-  { key: "Property value (AMT_GOODS_PRICE)", weight: 2.3, higher: "lower" },
-  { key: "Annual payment (AMT_ANNUITY)", weight: 2.1, higher: "higher" },
-  { key: "Gender (CODE_GENDER)", weight: 2.1, higher: "mixed" },
+  { key: "External risk score A (EXT_SOURCE_2)", weight: 13.8 },
+  { key: "External risk score B (EXT_SOURCE_3)", weight: 13.6 },
+  { key: "External risk score C (EXT_SOURCE_1)", weight: 5.1 },
+  { key: "Age (DAYS_BIRTH)", weight: 3.3 },
+  { key: "Debt-to-credit ratio", weight: 2.7 },
+  { key: "Installments remaining", weight: 2.5 },
+  { key: "Loan amount (AMT_CREDIT)", weight: 2.6 },
+  { key: "% Late payments", weight: 2.0 },
+  { key: "Previous rejection rate", weight: 1.8 },
 ];
 
 document.getElementById('appForm').addEventListener('submit', async function(e) {
@@ -659,12 +724,15 @@ function showResult(result) {
 
   // Decision badge
   const badge = document.getElementById('decisionBadge');
-  decision === 'approve' ? badge.className = 'decision-badge approve' :
-  decision === 'reject' ? badge.className = 'decision-badge reject' :
-  badge.className = 'decision-badge moderate';
+  badge.className = 'decision-badge ' + (
+    decision === 'approve' ? 'approve' :
+    decision === 'reject' ? 'reject' : 'moderate'
+  );
   badge.innerHTML = decision === 'approve'
     ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> APPROVED'
-    : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> REJECTED';
+    : decision === 'reject'
+    ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> REJECTED'
+    : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg> REVIEW NEEDED';
 
   // Details
   document.getElementById('detailScore').textContent = (score * 100).toFixed(2) + '%';

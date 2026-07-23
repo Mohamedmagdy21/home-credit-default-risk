@@ -29,7 +29,7 @@ from src.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
 
-DECISION_THRESHOLD = float(os.environ.get("DECISION_THRESHOLD", "0.5"))
+DECISION_THRESHOLD = float(os.environ.get("DECISION_THRESHOLD", "0.08"))
 
 ensemble: ModelEnsemble | None = None
 
@@ -71,7 +71,7 @@ async def ui() -> HTMLResponse:
 
 class PredictionResult(BaseModel):
     score: float = Field(..., description="Predicted default probability [0, 1]")
-    decision: str = Field(..., description="'approve' or 'reject'")
+    decision: str = Field(..., description="'approve', 'review', or 'reject'")
     threshold: float
 
 
@@ -85,7 +85,11 @@ class BatchResponse(BaseModel):
 
 
 def _decide(score: float) -> str:
-    return "reject" if score >= DECISION_THRESHOLD else "approve"
+    if score >= DECISION_THRESHOLD:
+        return "reject"
+    if score >= DECISION_THRESHOLD * 0.6:
+        return "review"
+    return "approve"
 
 
 def _result(score: float) -> PredictionResult:

@@ -188,8 +188,8 @@ Response:
 | Field | What it means |
 |-------|---------------|
 | `score` | **Predicted probability of default** — a value between 0 and 1. Here, 0.042 = a 4.2% chance the applicant will fail to repay the loan (and conversely, a 95.8% chance they *will* repay). |
-| `decision` | **Business rule applied to the score** — if `score < threshold`, the application is **`"approve"`**; otherwise **`"reject"`**. The threshold is configurable to match a lender's risk appetite. |
-| `threshold` | **The cutoff used for this decision** (defaults to 0.5, overridable via the `DECISION_THRESHOLD` environment variable). A lower threshold (e.g. 0.2) means fewer defaults but also more rejections; a higher threshold (e.g. 0.7) means more approvals but higher portfolio risk. |
+| `decision` | **Business rule applied to the score** — `score < 0.6×threshold` → **`"approve"`**, `0.6×threshold ≤ score < threshold` → **`"review"`** (manual underwriting), `score ≥ threshold` → **`"reject"`**. The threshold is configurable to match a lender's risk appetite. |
+| `threshold` | **The cutoff used for this decision** (defaults to 0.08, overridable via the `DECISION_THRESHOLD` environment variable). The threshold is set near the dataset's 8.1% base default rate so the system catches realistic risk rather than approving everyone. A lower threshold means fewer defaults but more rejections; a higher threshold means more approvals but higher portfolio risk. Scores in the 0.6x–1x range of the threshold trigger a **`"review"`** decision for manual underwriting. |
 
 **Example interpretation:** If the API returns `score: 0.042`, the model estimates a **4 out of 100** chance of default. Since 0.042 < 0.5, the system recommends approval. This is a low-risk applicant.
 

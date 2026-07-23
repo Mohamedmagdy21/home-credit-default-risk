@@ -51,7 +51,7 @@ def trained_app(tmp_path):
 
     import os
     os.environ["MODELS_DIR"] = str(tmp_path)
-    os.environ["DECISION_THRESHOLD"] = "0.5"
+    os.environ["DECISION_THRESHOLD"] = "0.08"
 
     # Import after env is set so lifespan picks up the right dir
     from src.serving.app import app
@@ -88,8 +88,8 @@ def test_predict(trained_app):
     assert resp.status_code == 200
     body = resp.json()
     assert 0.0 <= body["score"] <= 1.0
-    assert body["decision"] in ("approve", "reject")
-    assert body["threshold"] == 0.5
+    assert body["decision"] in ("approve", "review", "reject")
+    assert body["threshold"] == 0.08
 
 
 def test_predict_sparse_input(trained_app):
