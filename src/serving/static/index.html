@@ -30,7 +30,12 @@
   .btn:hover { transform: translateY(-1px); }
   .btn-sample { background: linear-gradient(135deg, #38a169, #2f855a); color: white; }
   .btn-sample:hover { box-shadow: 0 6px 20px rgba(56,161,105,0.3); }
+  .btn-upload { background: linear-gradient(135deg, #2b6cb0, #2c5282); color: white; }
+  .btn-upload:hover { box-shadow: 0 6px 20px rgba(43,108,176,0.3); }
   .btn-clear { background: #e2e8f0; color: var(--text); }
+  .sample-links { margin-bottom: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 14px; background: #f7fafc; border-radius: 8px; border: 1px dashed #cbd5e0; }
+  .sample-links a { font-size: 12px; color: var(--primary-light); text-decoration: none; padding: 4px 10px; border-radius: 6px; background: #ebf8ff; transition: background 0.2s; }
+  .sample-links a:hover { background: #bee3f8; }
   .btn-primary { background: linear-gradient(135deg, var(--primary-light), var(--primary)); color: white; padding: 14px 28px; font-size: 16px; width: 100%; }
   .btn-primary:hover { box-shadow: 0 6px 20px rgba(43,108,176,0.3); }
   .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
@@ -104,10 +109,23 @@
       <div class="toolbar">
         <button class="btn btn-sample" id="loadSampleBtn" onclick="loadSample()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Load Sample Application
+          Load Random Sample
         </button>
+        <button class="btn btn-upload" id="uploadBtn" onclick="document.getElementById('fileInput').click()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload File
+        </button>
+        <input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleFileUpload(event)">
         <button class="btn btn-clear" onclick="clearForm()">Clear</button>
         <span id="sampleInfo" style="font-size:12px;color:var(--text-light);line-height:38px;"></span>
+      </div>
+
+      <div class="sample-links">
+        <span style="font-size:12px;color:var(--text-light);margin-right:8px;">Download samples:</span>
+        <a href="/static/samples/sample_low_risk.json" download>Low Risk</a>
+        <a href="/static/samples/sample_medium_risk.json" download>Medium Risk</a>
+        <a href="/static/samples/sample_high_risk.json" download>High Risk</a>
+        <a href="/static/samples/sample_pensioner.json" download>Pensioner</a>
       </div>
 
       <form id="appForm" class="form-grid" onsubmit="return false">
@@ -314,6 +332,39 @@ function clearForm() {
   document.querySelectorAll("#formFields input").forEach(inp => { inp.value = ""; inp.classList.remove("filled"); });
   updateFilledCount();
   document.getElementById("sampleInfo").textContent = "";
+}
+
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      // Handle both {features: {...}} format and flat {feature: value} format
+      const app = data.features || data;
+      let count = 0;
+      Object.entries(app).forEach(([key, val]) => {
+        const input = document.getElementById("f_" + key);
+        if (input) {
+          if (val !== null && val !== undefined) {
+            input.value = typeof val === "number" ? val : String(val);
+            count++;
+          } else {
+            input.value = "";
+          }
+        }
+      });
+      updateFilledCount();
+      const profileName = data.profile_name || file.name;
+      document.getElementById("sampleInfo").textContent = profileName + " (" + count + " features loaded)";
+      showToast("Loaded: " + profileName + " (" + count + " features)", "success");
+    } catch (err) {
+      showToast("Failed to parse JSON file: " + err.message, "error");
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = "";
 }
 
 async function assess() {
